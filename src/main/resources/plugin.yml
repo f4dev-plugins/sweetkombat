@@ -1,0 +1,6 @@
+name: sweetkombat
+version: '1.0'
+main: me.imf4ll.sweetkombat.SweetKombat
+api-version: '1.20'
+authors: [ imf4ll ]
+description: Simulates 1.8- combat behavior.
