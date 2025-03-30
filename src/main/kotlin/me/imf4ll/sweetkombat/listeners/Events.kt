@@ -1,7 +1,7 @@
 package me.imf4ll.sweetkombat.listeners
 
+import me.imf4ll.sweetkombat.utils.Utils
 import org.bukkit.Bukkit
-import org.bukkit.attribute.Attribute
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -9,32 +9,29 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.plugin.java.JavaPlugin
 
 class EventsListener(private val plugin: JavaPlugin, private val config: FileConfiguration) : Listener {
   @EventHandler
-  fun onPlayerJoin(event: PlayerJoinEvent) {
-    val player = event.player;
-    val attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+  fun onEntityDamage(event: EntityDamageByEntityEvent) {
+    val damager = event.damager;
+    val damage = event.damage;
 
-    if (attribute != null) {
-      attribute.baseValue = config.getDouble("attack-speed");
+    if (damager is Player) {
+      if (event.cause == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK && !config.getBoolean("enable-sweep")) {
+        event.isCancelled = true;
+        event.damage = 0.0;
 
+      } else if (event.cause == EntityDamageEvent.DamageCause.ENTITY_ATTACK) event.damage = damage;
     }
   }
 
   @EventHandler
-  fun onEntityDamage(event: EntityDamageByEntityEvent) {
-    if (event.damager is Player && !config.getBoolean("enable-sweep")) {
-      if (event.cause == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
-        event.damage = 0.0;
-        event.isCancelled = true;
+  fun onPlayerJoin(event: PlayerJoinEvent) { Utils().setAttackSpeed(event.player, config); }
 
-        Bukkit.getScheduler().runTaskLater(plugin, Runnable {
-          event.entity.velocity = org.bukkit.util.Vector(0, 0, 0) }, 1L);
-      }
-
-      event.isCancelled = false;
-    }
+  @EventHandler
+  fun onRespawn(event: PlayerRespawnEvent) {
+    Bukkit.getScheduler().runTaskLater(plugin, Runnable { Utils().setAttackSpeed(event.player, config) }, 1L);
   }
 }
