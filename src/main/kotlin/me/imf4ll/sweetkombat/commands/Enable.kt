@@ -18,7 +18,7 @@ class Enable(private val pl: Plugin): CommandExecutor {
     sender.sendMessage("§eSweet Kombat: ${ if (newConfig) "§a${ Locale.t(pl.config, "enable") }" else "§c${ Locale.t(pl.config, "disable") }" }.§r");
 
     pl.server.onlinePlayers.forEach {
-      Utils().setAttackSpeed(it, if (newConfig) pl.config.getDouble("attack-speed") else 1.0);
+      Utils().setAttackSpeed(it, if (newConfig) pl.config.getDouble("attack-speed") else 4.0);
 
     }
 
