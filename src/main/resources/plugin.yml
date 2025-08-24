@@ -1,6 +1,19 @@
 name: sweetkombat
-version: '1.1'
+version: '1.2'
 main: me.imf4ll.sweetkombat.SweetKombat
 api-version: '1.20'
 authors: [ imf4ll ]
 description: Simulates 1.8- combat behavior.
+permissions:
+  op:
+    default: op
+    description: Master permission
+commands:
+  sk.enable:
+    permission: op
+    usage: /sk.enable
+    description: Enables/disables 1.8 behavior.
+  sk.attackspeed:
+    permission: op
+    usage: /sk.attackspeed 16
+    description: "Adjust the attack speed. Default: 16.0"

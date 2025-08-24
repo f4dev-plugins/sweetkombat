@@ -15,11 +15,13 @@ import org.bukkit.plugin.java.JavaPlugin
 class EventsListener(private val plugin: JavaPlugin, private val config: FileConfiguration) : Listener {
   @EventHandler
   fun onEntityDamage(event: EntityDamageByEntityEvent) {
+    if (!config.getBoolean("enable-sweep")) return;
+
     val damager = event.damager;
     val damage = event.damage;
 
     if (damager is Player) {
-      if (event.cause == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK && !config.getBoolean("enable-sweep")) {
+      if (event.cause == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
         event.isCancelled = true;
         event.damage = 0.0;
 
@@ -28,10 +30,16 @@ class EventsListener(private val plugin: JavaPlugin, private val config: FileCon
   }
 
   @EventHandler
-  fun onPlayerJoin(event: PlayerJoinEvent) { Utils().setAttackSpeed(event.player, config); }
+  fun onPlayerJoin(event: PlayerJoinEvent) {
+    if (!config.getBoolean("enable-sweep")) return;
+
+    Utils().setAttackSpeed(event.player, config.getDouble("attack-speed"));
+  }
 
   @EventHandler
   fun onRespawn(event: PlayerRespawnEvent) {
-    Bukkit.getScheduler().runTaskLater(plugin, Runnable { Utils().setAttackSpeed(event.player, config) }, 1L);
+    if (!config.getBoolean("enable-sweep")) return;
+
+    Bukkit.getScheduler().runTaskLater(plugin, Runnable { Utils().setAttackSpeed(event.player, config.getDouble("attack-speed")) }, 1L);
   }
 }
