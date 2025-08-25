@@ -3,10 +3,12 @@ package me.imf4ll.sweetkombat
 import me.imf4ll.sweetkombat.commands.AttackSpeed
 import me.imf4ll.sweetkombat.commands.Enable
 import me.imf4ll.sweetkombat.listeners.EventsListener
+import me.imf4ll.sweetkombat.utils.Localization
 import org.bukkit.plugin.java.JavaPlugin
 
 class SweetKombat : JavaPlugin() {
   override fun onEnable() {
+    Localization.init(this);
     saveDefaultConfig();
 
     // Listeners

@@ -2,6 +2,8 @@
 
 **Simulates the behavior of combat from Minecraft 1.8 on recent versions.**
 
+*If you want to support my work: https://ko-fi.com/f4dev*
+
 ## ⚙️ Settings
 
 On `config.yml`, you can adjust:

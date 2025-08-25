@@ -1,5 +1,5 @@
 name: sweetkombat
-version: '1.2'
+version: '1.2.1'
 main: me.imf4ll.sweetkombat.SweetKombat
 api-version: '1.20'
 authors: [ imf4ll ]

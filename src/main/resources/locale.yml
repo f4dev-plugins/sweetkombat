@@ -1,0 +1,10 @@
+pt:
+  invalid-value: "§cValor inválido.§r"
+  attack-value: "§aValor do 'attack-speed' setado para"
+  enable: "§eSweet Kombat: §aativado§r"
+  disable: "§eSweet Kombat: §cdesativado§r"
+en:
+  invalid-value: "§cInvalid value.§r"
+  attack-value: "§a'attack-speed' value set to"
+  enable: "§eSweet Kombat: §aenabled§r"
+  disable: "§eSweet Kombat: §cdisabled§r"
